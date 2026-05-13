@@ -42,7 +42,7 @@
         .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 2px; color: var(--primary); }
 
         .hero {
-            height: 90vh;
+            height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -89,7 +89,6 @@
             box-shadow: 0 0 40px rgba(157, 78, 221, 0.7);
         }
 
-        /* SECTION INSTALLATION */
         .install-guide {
             padding: 60px 10%;
             background: rgba(157, 78, 221, 0.05);
@@ -129,7 +128,6 @@
             font-weight: bold;
         }
 
-        .step p { font-size: 0.95rem; line-height: 1.5; opacity: 0.9; }
         .highlight { color: var(--accent); font-weight: bold; }
 
         .features {
@@ -147,6 +145,8 @@
             backdrop-filter: blur(20px);
         }
 
+        .card h3 { color: var(--primary); margin-bottom: 15px; }
+
         footer { padding: 60px; text-align: center; color: rgba(255,255,255,0.4); border-top: 1px solid var(--border); }
     </style>
 </head>
@@ -155,37 +155,52 @@
 
     <section class="hero">
         <div class="badge">Version Bêta Publique</div>
-        <h1>Le Hub Gaming<br>Nouvelle Génération.</h1>
-        <p style="margin-bottom: 40px; opacity: 0.8; max-width: 700px;">Stats en direct, promos imbattables et bibliothèque ultra-complète. Tout est là.</p>
+        <h1>Discord réinventé.<br>Le Gaming sans limites.</h1>
+        <p style="margin-bottom: 40px; opacity: 0.8; max-width: 750px; font-size: 1.1rem;">
+            Plus qu'un launcher, ATHUM fusionne vos statistiques, vos amis et une bibliothèque de 300+ jeux avec les meilleures promos du web.
+        </p>
         
-        <a href="https://drive.google.com/file/d/1CNg32f4M9ZEYi3NNSoxsOdag8XtmZFx0/view?usp=sharing" class="btn" target="_blank">Installer ATHUM gratuitement</a>
-        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.5;">Portable Windows • v0.1.0</p>
+        <a href="https://drive.google.com/uc?export=download&id=1CNg32f4M9ZEYi3NNSoxsOdag8XtmZFx0" class="btn">Installer ATHUM gratuitement</a>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.5;">Fichier : ATHUM.exe • Windows 10/11</p>
     </section>
 
     <section class="install-guide">
-        <h2>Comment installer ATHUM ?</h2>
+        <h2>Guide d'installation Windows Defender</h2>
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
-                <p>Clique sur le bouton de téléchargement ci-dessus et enregistre le fichier <span class="highlight">ATHUM.exe</span>.</p>
+                <p>Après le téléchargement, lancez <span class="highlight">ATHUM.exe</span>.</p>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
-                <p>Si Windows affiche une alerte, clique sur <span class="highlight">"Informations complémentaires"</span>.</p>
+                <p>Si Windows Defender bloque, cliquez sur <span class="highlight">"Informations complémentaires"</span>.</p>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
-                <p>Enfin, clique sur le bouton <span class="highlight">"Exécuter quand même"</span> pour lancer l'écosystème.</p>
+                <p>Cliquez sur le bouton <span class="highlight">"Exécuter quand même"</span> pour démarrer l'app.</p>
             </div>
         </div>
     </section>
 
     <section class="features">
-        <div class="card"><h3>Social & Stats</h3><p>Suis tes amis et tes performances avec une précision jamais vue.</p></div>
-        <div class="card"><h3>Promos Auto</h3><p>On scanne les meilleures offres pour toi sur tous les gros titres.</p></div>
-        <div class="card"><h3>300+ Jeux</h3><p>Une base de données massive accessible instantanément.</p></div>
+        <div class="card">
+            <h3>Le Social Réinventé</h3>
+            <p>Stats en direct pour chaque joueur. Suivez vos potes et comparez vos performances en temps réel.</p>
+        </div>
+        <div class="card">
+            <h3>Promos Automatiques</h3>
+            <p>Notre système scanne les plus grosses réductions pour vous. Ne ratez plus aucune promo gaming.</p>
+        </div>
+        <div class="card">
+            <h3>Bibliothèque Géante</h3>
+            <p>Une base de données de 300+ jeux avec visuels HD et accès direct. Tout votre univers est ici.</p>
+        </div>
     </section>
 
-    <footer>&copy; 2026 ATHUM — Développé par Léo Garcia Bourhis</footer>
+    <footer style="text-align: center; padding-bottom: 100px;">
+        <p>Contact : <a href="mailto:lgarciabourhis@icloud.com" style="color:var(--accent); text-decoration:none;">lgarciabourhis@icloud.com</a></p>
+        <br>
+        &copy; 2026 ATHUM Project — Développé par Léo Garcia Bourhis
+    </footer>
 </body>
 </html>
