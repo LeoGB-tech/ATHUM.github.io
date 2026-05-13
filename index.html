@@ -26,7 +26,7 @@
                         radial-gradient(circle at bottom left, #100a25, transparent);
         }
 
-        h1, h2, .logo { font-family: 'Space Grotesk', sans-serif; }
+        h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
 
         nav {
             padding: 2rem 10%;
@@ -42,7 +42,7 @@
         .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 2px; color: var(--primary); }
 
         .hero {
-            height: 100vh;
+            height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -60,7 +60,6 @@
             margin-bottom: 20px;
             color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .hero h1 {
@@ -72,34 +71,66 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            max-width: 800px;
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
         .btn {
             padding: 18px 45px;
             border-radius: 14px;
             text-decoration: none;
             font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             display: inline-block;
             font-size: 1.1rem;
             background: var(--primary);
             color: white;
-            box-shadow: 0 10px 20px rgba(157, 78, 221, 0.3);
-            border: none;
-            cursor: pointer;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
         }
 
         .btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(157, 78, 221, 0.5);
-            background: #b062ff;
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(157, 78, 221, 0.7);
         }
+
+        /* SECTION INSTALLATION */
+        .install-guide {
+            padding: 60px 10%;
+            background: rgba(157, 78, 221, 0.05);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .install-guide h2 { margin-bottom: 40px; color: var(--primary); }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .step {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 20px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+        }
+
+        .step-number {
+            background: var(--primary);
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .step p { font-size: 0.95rem; line-height: 1.5; opacity: 0.9; }
+        .highlight { color: var(--accent); font-weight: bold; }
 
         .features {
             display: grid;
@@ -114,96 +145,47 @@
             padding: 40px;
             border-radius: 24px;
             backdrop-filter: blur(20px);
-            transition: all 0.4s;
         }
 
-        .card:hover { 
-            border-color: var(--primary);
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .card h3 { margin-bottom: 15px; color: var(--primary); font-size: 1.5rem; }
-
-        .code-access {
-            text-align: center;
-            padding: 100px 10%;
-            background: linear-gradient(to bottom, transparent, rgba(157, 78, 221, 0.05));
-        }
-
-        .email-link { color: var(--accent); text-decoration: none; font-weight: bold; }
-
-        footer {
-            padding: 60px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.4);
-            border-top: 1px solid var(--border);
-        }
-
-        .glow {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: var(--primary);
-            filter: blur(180px);
-            opacity: 0.15;
-            z-index: -1;
-            animation: float 15s infinite alternate ease-in-out;
-        }
-
-        @keyframes float {
-            0% { transform: translate(-20%, -10%); }
-            100% { transform: translate(30%, 20%); }
-        }
+        footer { padding: 60px; text-align: center; color: rgba(255,255,255,0.4); border-top: 1px solid var(--border); }
     </style>
 </head>
 <body>
-    <div class="glow"></div>
-    
-    <nav>
-        <div class="logo">ATHUM</div>
-        <div style="font-weight: 500; opacity: 0.6;">v0.1.0</div>
-    </nav>
+    <nav><div class="logo">ATHUM</div></nav>
 
     <section class="hero">
-        <div class="badge">Le futur du Gaming</div>
-        <h1>Discord réinventé.<br>Le Gaming sans limites.</h1>
-        <p>Oubliez les launchers classiques. ATHUM fusionne vos statistiques, vos amis et une bibliothèque de 300+ jeux avec les meilleures promos du web dans une interface révolutionnaire.</p>
+        <div class="badge">Version Bêta Publique</div>
+        <h1>Le Hub Gaming<br>Nouvelle Génération.</h1>
+        <p style="margin-bottom: 40px; opacity: 0.8; max-width: 700px;">Stats en direct, promos imbattables et bibliothèque ultra-complète. Tout est là.</p>
         
         <a href="https://drive.google.com/file/d/1CNg32f4M9ZEYi3NNSoxsOdag8XtmZFx0/view?usp=sharing" class="btn" target="_blank">Installer ATHUM gratuitement</a>
-        
-        <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.5;">Compatible Windows 10/11 • v0.1.0</p>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.5;">Portable Windows • v0.1.0</p>
+    </section>
+
+    <section class="install-guide">
+        <h2>Comment installer ATHUM ?</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <p>Clique sur le bouton de téléchargement ci-dessus et enregistre le fichier <span class="highlight">ATHUM.exe</span>.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <p>Si Windows affiche une alerte, clique sur <span class="highlight">"Informations complémentaires"</span>.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <p>Enfin, clique sur le bouton <span class="highlight">"Exécuter quand même"</span> pour lancer l'écosystème.</p>
+            </div>
+        </div>
     </section>
 
     <section class="features">
-        <div class="card">
-            <h3>Le Social Réinventé</h3>
-            <p>Un système de statistiques dynamique. Suivez vos amis et comparez vos exploits en temps réel avec une précision jamais vue.</p>
-        </div>
-        <div class="card">
-            <h3>Promos Automatiques</h3>
-            <p>Notre algorithme scanne le web pour vous. Accédez instantanément aux plus grosses promos sans lever le petit doigt.</p>
-        </div>
-        <div class="card">
-            <h3>Bibliothèque Ultime</h3>
-            <p>Plus de 300 titres référencés avec accès direct, visuels HD et métadonnées complètes. Tout votre univers centralisé.</p>
-        </div>
+        <div class="card"><h3>Social & Stats</h3><p>Suis tes amis et tes performances avec une précision jamais vue.</p></div>
+        <div class="card"><h3>Promos Auto</h3><p>On scanne les meilleures offres pour toi sur tous les gros titres.</p></div>
+        <div class="card"><h3>300+ Jeux</h3><p>Une base de données massive accessible instantanément.</p></div>
     </section>
 
-    <section class="code-access">
-        <h2>Rejoignez le projet</h2>
-        <p style="margin: 25px 0; opacity: 0.8; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Le code source de l'application est disponible pour les développeurs souhaitant contribuer à l'écosystème.
-        </p>
-        <p>
-            Contact : 
-            <a href="mailto:lgarciabourhis@icloud.com" class="email-link">lgarciabourhis@icloud.com</a>
-        </p>
-    </section>
-
-    <footer>
-        &copy; 2026 ATHUM — Créé par Léo Garcia Bourhis.
-    </footer>
+    <footer>&copy; 2026 ATHUM — Développé par Léo Garcia Bourhis</footer>
 </body>
 </html>
