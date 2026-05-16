@@ -1,211 +1,883 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATHUM — L'Écosystème Gaming Ultime</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #9d4edd;
-            --secondary: #5a189a;
-            --accent: #ff00ff;
-            --bg: #0a0612;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Athum — The Social Network for Gamers</title>
+<meta name="description" content="Athum is a social network built for gamers. Track deals, manage your library across platforms, chat with friends, build communities.">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+    --bg: #0a0612;
+    --bg-2: #14091f;
+    --text: #f0e8ff;
+    --text-2: #a89db8;
+    --text-3: #6b5e7d;
+    --accent: #c97bff;
+    --accent-2: #fd79a8;
+    --accent-3: #6c5ce7;
+    --accent-glow: rgba(201, 123, 255, 0.4);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-strong: rgba(255, 255, 255, 0.06);
+    --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(201,123,255,0.15), transparent 50%),
+        radial-gradient(circle at 85% 85%, rgba(253,121,168,0.1), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(108,92,231,0.08), transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+/* ═══ NAV ═══ */
+.nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 22px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 6, 18, 0.6);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.4s var(--ease-fluid);
+}
+.nav.scrolled { padding: 14px 40px; }
+.nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 20px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    text-decoration: none;
+}
+.nav-logo-circle {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--accent-3), var(--accent), var(--accent-2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900;
+    color: white;
+}
+.nav-links {
+    display: flex; align-items: center; gap: 36px;
+}
+.nav-links a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.3s var(--ease-smooth);
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+    display: flex; gap: 10px;
+}
+.nav-btn {
+    padding: 9px 18px;
+    border-radius: 100px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s var(--ease-fluid);
+    border: none;
+    font-family: 'Inter', sans-serif;
+}
+.nav-btn.ghost {
+    background: transparent;
+    color: var(--text-2);
+    border: 1px solid var(--border-strong);
+}
+.nav-btn.ghost:hover { color: var(--text); border-color: var(--text-2); }
+.nav-btn.primary {
+    background: white;
+    color: #0a0612;
+}
+.nav-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
 
-        body {
-            background-color: var(--bg);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            background: radial-gradient(circle at top right, #231446, transparent),
-                        radial-gradient(circle at bottom left, #100a25, transparent);
-        }
+/* ═══ HERO ═══ */
+.hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 140px 24px 80px;
+    position: relative;
+    text-align: center;
+}
+.hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 16px;
+    background: var(--glass-strong);
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-2);
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(20px);
+    animation: heroIn 0.9s var(--ease-fluid) 0.1s forwards;
+}
+.hero-tag-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulseDot 2s var(--ease-smooth) infinite;
+}
+@keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+.hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 1;
+    max-width: 1100px;
+    margin: 0 auto 28px;
+    opacity: 0; transform: translateY(30px);
+    animation: heroIn 1s var(--ease-fluid) 0.2s forwards;
+}
+.hero h1 .gradient {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+}
+.hero h1 .italic {
+    font-style: italic;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+}
+@keyframes heroIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+.hero-sub {
+    font-size: 18px;
+    color: var(--text-2);
+    max-width: 600px;
+    margin: 0 auto 44px;
+    line-height: 1.6;
+    opacity: 0; transform: translateY(30px);
+    animation: heroIn 1s var(--ease-fluid) 0.3s forwards;
+}
+.hero-cta {
+    display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; transform: translateY(30px);
+    animation: heroIn 1s var(--ease-fluid) 0.4s forwards;
+}
+.btn-big {
+    padding: 17px 32px;
+    border-radius: 100px;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.4s var(--ease-fluid);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex; align-items: center; gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+.btn-big.primary {
+    background: white;
+    color: #0a0612;
+}
+.btn-big.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(255,255,255,0.25);
+}
+.btn-big.ghost {
+    background: var(--glass-strong);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+}
+.btn-big.ghost:hover {
+    background: var(--glass);
+    border-color: var(--text-2);
+    transform: translateY(-2px);
+}
 
-        h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
+/* Hero visual frame */
+.hero-visual {
+    margin-top: 80px;
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 16/10;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(201,123,255,0.4), transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(253,121,168,0.3), transparent 50%),
+        linear-gradient(135deg, #1a0d2e, #14091f, #0a0612);
+    border: 1px solid var(--border-strong);
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+        0 60px 120px rgba(108,92,231,0.3),
+        0 0 0 1px var(--border) inset;
+    opacity: 0; transform: translateY(60px);
+    animation: heroIn 1.2s var(--ease-fluid) 0.5s forwards;
+}
+.hero-visual::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 23px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(201,123,255,0.5), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(253,121,168,0.4), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(108,92,231,0.4), transparent 50%);
+    filter: blur(40px);
+    animation: liquid 8s ease-in-out infinite;
+}
+@keyframes liquid {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    33% { transform: scale(1.1) rotate(2deg); }
+    66% { transform: scale(0.95) rotate(-2deg); }
+}
+.hero-visual-content {
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    z-index: 2;
+}
+.hero-visual-logo {
+    width: 140px; height: 140px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-radius: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 100px; font-weight: 900;
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: 0 30px 80px rgba(201,123,255,0.5), 0 0 0 1px rgba(255,255,255,0.2);
+    animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+.hero-visual-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 12px;
+    font-weight: 700;
+}
 
-        nav {
-            padding: 2rem 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            z-index: 100;
-        }
+/* ═══ SECTION COMMON ═══ */
+.section {
+    padding: 120px 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.section-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--glass-strong);
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 18px;
+}
+.section-title .italic {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--text-2);
+}
+.section-sub {
+    font-size: 17px;
+    color: var(--text-2);
+    max-width: 600px;
+    line-height: 1.6;
+}
 
-        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 2px; color: var(--primary); }
+/* ═══ 3 STEPS ═══ */
+.steps-section {
+    text-align: center;
+}
+.steps-section .section-title,
+.steps-section .section-sub {
+    margin-left: auto; margin-right: auto;
+}
+.steps-section .section-sub {
+    margin-bottom: 60px;
+}
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.step-card {
+    background: linear-gradient(180deg, var(--glass-strong), var(--glass));
+    border: 1px solid var(--border-strong);
+    border-radius: 24px;
+    padding: 36px;
+    text-align: left;
+    transition: all 0.5s var(--ease-fluid);
+    position: relative;
+    overflow: hidden;
+}
+.step-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 30px 60px rgba(201,123,255,0.2);
+}
+.step-num {
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+}
+.step-visual {
+    width: 100%;
+    aspect-ratio: 1.2;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+}
+.step-visual-1 {
+    background:
+        radial-gradient(circle at 50% 50%, #2a1454, #14091f);
+    display: flex; align-items: center; justify-content: center;
+}
+.step-visual-1::before {
+    content: '🎮';
+    font-size: 70px;
+    filter: drop-shadow(0 0 20px rgba(201,123,255,0.6));
+    animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+.step-visual-2 {
+    background:
+        radial-gradient(circle at 30% 30%, #4a1a6a, transparent),
+        radial-gradient(circle at 70% 70%, #1a2a6a, transparent),
+        #14091f;
+    display: flex; align-items: center; justify-content: center;
+}
+.step-visual-2::before {
+    content: '💬';
+    font-size: 70px;
+    filter: drop-shadow(0 0 20px rgba(108,92,231,0.6));
+    animation: pulse 3s ease-in-out infinite 0.5s;
+}
+.step-visual-3 {
+    background:
+        radial-gradient(circle at 50% 50%, #6a1a4a, #14091f);
+    display: flex; align-items: center; justify-content: center;
+}
+.step-visual-3::before {
+    content: '💸';
+    font-size: 70px;
+    filter: drop-shadow(0 0 20px rgba(253,121,168,0.6));
+    animation: pulse 3s ease-in-out infinite 1s;
+}
+.step-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+.step-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.6;
+}
 
-        .hero {
-            height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-        }
+/* ═══ FEATURES GRID ═══ */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 50px;
+}
+.feature-card {
+    background: var(--glass-strong);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    transition: all 0.4s var(--ease-fluid);
+}
+.feature-card:hover {
+    border-color: var(--accent);
+    background: var(--glass);
+    transform: translateY(-3px);
+}
+.feature-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+}
+.feature-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.feature-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+}
 
-        .badge {
-            background: var(--glass);
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            text-transform: uppercase;
-        }
+/* ═══ DOWNLOAD SECTION ═══ */
+.download-section {
+    text-align: center;
+    padding: 140px 24px;
+    background:
+        radial-gradient(ellipse at center, rgba(201,123,255,0.15), transparent 60%),
+        var(--bg);
+    position: relative;
+    overflow: hidden;
+}
+.download-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(253,121,168,0.1), transparent 70%);
+    border-radius: 50%;
+    animation: liquid 12s ease-in-out infinite;
+}
+.download-section > * { position: relative; z-index: 1; }
 
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom, #fff, #9d4edd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.download-buttons {
+    display: flex; gap: 16px; justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+.download-btn {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 32px;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.4s var(--ease-fluid);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid var(--border-strong);
+    min-width: 240px;
+    background: var(--glass-strong);
+    color: var(--text);
+}
+.download-btn.active {
+    background: linear-gradient(135deg, var(--accent-3), var(--accent), var(--accent-2));
+    color: white;
+    border: none;
+    box-shadow: 0 16px 40px rgba(201,123,255,0.4);
+}
+.download-btn.active:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 60px rgba(201,123,255,0.5);
+}
+.download-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.download-btn-icon {
+    font-size: 28px;
+}
+.download-btn-text {
+    text-align: left;
+}
+.download-btn-label {
+    font-size: 11px;
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.download-btn-os {
+    font-size: 17px;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+}
+.coming-soon-tag {
+    display: inline-block;
+    margin-top: 3px;
+    font-size: 9px;
+    padding: 2px 8px;
+    background: rgba(253, 121, 168, 0.2);
+    color: var(--accent-2);
+    border-radius: 100px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
 
-        .btn {
-            padding: 18px 45px;
-            border-radius: 14px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            display: inline-block;
-            font-size: 1.1rem;
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
-            border: none;
-            cursor: pointer;
-        }
+/* ═══ SMARTSCREEN WARNING ═══ */
+.warning-section {
+    max-width: 800px;
+    margin: 60px auto 0;
+    padding: 28px;
+    background: rgba(255, 217, 61, 0.06);
+    border: 1px solid rgba(255, 217, 61, 0.25);
+    border-radius: 20px;
+    text-align: left;
+}
+.warning-title {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #ffd93d;
+}
+.warning-text {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+.warning-toggle {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s var(--ease-smooth);
+    font-family: 'Inter', sans-serif;
+}
+.warning-toggle:hover { background: var(--glass-strong); border-color: var(--accent); }
+.warning-details {
+    display: none;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+.warning-details.open { display: block; }
+.warning-details ol {
+    padding-left: 22px;
+    color: var(--text-2);
+    font-size: 13px;
+    line-height: 1.9;
+}
+.warning-details ol li {
+    margin-bottom: 6px;
+}
+.warning-details strong { color: var(--text); }
 
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 40px rgba(157, 78, 221, 0.7);
-        }
+/* ═══ FOOTER ═══ */
+.footer {
+    border-top: 1px solid var(--border);
+    padding: 50px 24px 30px;
+    text-align: center;
+    color: var(--text-3);
+    font-size: 13px;
+}
+.footer a { color: var(--text-2); text-decoration: none; margin: 0 14px; transition: color 0.3s; }
+.footer a:hover { color: var(--accent); }
+.footer-version {
+    margin-top: 16px;
+    color: var(--text-3);
+    font-size: 11px;
+    font-family: monospace;
+}
 
-        .install-guide {
-            padding: 60px 10%;
-            background: rgba(157, 78, 221, 0.05);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            text-align: center;
-        }
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 20px 60px; }
+    .section { padding: 80px 20px; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .hero-visual-logo { width: 100px; height: 100px; font-size: 70px; }
+    .hero-visual-text { font-size: 22px; }
+}
+@media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .nav-btn.ghost { display: none; }
+}
 
-        .install-guide h2 { margin-bottom: 40px; color: var(--primary); }
-
-        .steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .step {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 20px;
-            flex: 1;
-            min-width: 250px;
-            max-width: 350px;
-        }
-
-        .step-number {
-            background: var(--primary);
-            width: 30px;
-            height: 30px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .highlight { color: var(--accent); font-weight: bold; }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 100px 10%;
-        }
-
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 24px;
-            backdrop-filter: blur(20px);
-        }
-
-        .card h3 { color: var(--primary); margin-bottom: 15px; }
-
-        footer { padding: 60px; text-align: center; color: rgba(255,255,255,0.4); border-top: 1px solid var(--border); }
-    </style>
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s var(--ease-fluid), transform 0.9s var(--ease-fluid);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
 </head>
 <body>
-    <nav><div class="logo">ATHUM</div></nav>
 
-    <section class="hero">
-        <div class="badge">Version Bêta Publique</div>
-        <h1>Discord réinventé.<br>Le Gaming sans limites.</h1>
-        <p style="margin-bottom: 40px; opacity: 0.8; max-width: 750px; font-size: 1.1rem;">
-            Plus qu'un launcher, ATHUM fusionne vos statistiques, vos amis et une bibliothèque de 300+ jeux avec les meilleures promos du web.
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+    <a href="#" class="nav-logo">
+        <div class="nav-logo-circle">A</div>
+        <span>Athum</span>
+    </a>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#download">Download</a>
+    </div>
+    <div class="nav-cta">
+        <a href="https://discord.gg/grsvrKxRj" target="_blank" class="nav-btn ghost">Discord</a>
+        <a href="#download" class="nav-btn primary">Get Started</a>
+    </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Beta release — v4.0 available now
+    </div>
+    <h1>
+        The social network<br>
+        <span class="italic">made for</span> <span class="gradient">gamers</span>
+    </h1>
+    <p class="hero-sub">
+        Track game deals across every platform. Manage your library. Chat with friends.
+        Build communities. All in one app.
+    </p>
+    <div class="hero-cta">
+        <a href="#download" class="btn-big primary">
+            Download for Windows
+            <span>↓</span>
+        </a>
+        <a href="#features" class="btn-big ghost">
+            See features →
+        </a>
+    </div>
+
+    <div class="hero-visual">
+        <div class="hero-visual-content">
+            <div class="hero-visual-logo">A</div>
+            <div class="hero-visual-text">ATHUM</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 3 STEPS ═══ -->
+<section class="section steps-section reveal" id="how">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-title">
+        Three steps to your<br>
+        <span class="italic">gaming community</span>
+    </h2>
+    <p class="section-sub">
+        From install to full social experience in under two minutes. No paperwork, no waiting list.
+    </p>
+
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-num">STEP 1</div>
+            <div class="step-visual step-visual-1"></div>
+            <div class="step-title">Install Athum</div>
+            <div class="step-desc">Download the installer below and run it. Athum scans your installed games from Steam, Epic, Riot — automatically.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">STEP 2</div>
+            <div class="step-visual step-visual-2"></div>
+            <div class="step-title">Create your profile</div>
+            <div class="step-desc">Pick a username, your favorite games, your country. Add friends, join communities, jump into voice chats.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">STEP 3</div>
+            <div class="step-visual step-visual-3"></div>
+            <div class="step-title">Never miss a deal</div>
+            <div class="step-desc">Athum tracks prices on every store. Get notified when your wishlist games drop. Save money, play more.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section reveal" id="features">
+    <div class="section-tag">Features</div>
+    <h2 class="section-title">
+        Everything you need,<br>
+        <span class="italic">nothing you don't</span>
+    </h2>
+    <p class="section-sub">
+        A full social network and game launcher in one. Built by gamers, for gamers.
+    </p>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <div class="feature-title">Multi-platform library</div>
+            <div class="feature-desc">Auto-detect games from Steam, Epic, Riot, GOG and more in one unified library.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💸</div>
+            <div class="feature-title">Real-time price tracking</div>
+            <div class="feature-desc">Compare prices across every major store via CheapShark integration.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <div class="feature-title">Communities</div>
+            <div class="feature-desc">Create or join gaming communities. Host events. Share screenshots.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <div class="feature-title">Voice chat</div>
+            <div class="feature-desc">Discord integration via picture-in-picture. Unlimited members, zero latency.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <div class="feature-title">Smart recommendations</div>
+            <div class="feature-desc">Rule-based assistant suggests games based on your history and friends.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <div class="feature-title">Reputation & badges</div>
+            <div class="feature-desc">Earn points, unlock badges, climb the leaderboard. Be a legend.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ DOWNLOAD ═══ -->
+<section class="download-section" id="download">
+    <div class="section-tag">Download</div>
+    <h2 class="section-title" style="margin-bottom: 18px">
+        Start building<br>
+        <span class="italic">magic</span> today.
+    </h2>
+    <p class="section-sub" style="margin: 0 auto 0;">
+        Free. No account required to install. 100% local data.
+    </p>
+
+    <div class="download-buttons">
+        <a href="https://drive.google.com/file/d/1rUJPFAxtK1Ye4D5SKWSmO4Hn7jaS4DEb/view?usp=sharing"
+           target="_blank"
+           class="download-btn active">
+            <div class="download-btn-icon">🪟</div>
+            <div class="download-btn-text">
+                <div class="download-btn-label">Download for</div>
+                <div class="download-btn-os">Windows 10/11</div>
+            </div>
+        </a>
+        <div class="download-btn disabled">
+            <div class="download-btn-icon">🍎</div>
+            <div class="download-btn-text">
+                <div class="download-btn-label">Download for</div>
+                <div class="download-btn-os">macOS</div>
+                <div class="coming-soon-tag">COMING SOON</div>
+            </div>
+        </div>
+        <div class="download-btn disabled">
+            <div class="download-btn-icon">🐧</div>
+            <div class="download-btn-text">
+                <div class="download-btn-label">Download for</div>
+                <div class="download-btn-os">Linux</div>
+                <div class="coming-soon-tag">COMING SOON</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SmartScreen Warning -->
+    <div class="warning-section">
+        <div class="warning-title">⚠️ Windows blocks the installation?</div>
+        <p class="warning-text">
+            Because Athum is brand new, Windows SmartScreen doesn't recognize it yet and might block the installer.
+            This will improve over time as more people install it. Until then, you have two options:
         </p>
-        
-        <a href="https://drive.google.com/uc?export=download&id=1CNg32f4M9ZEYi3NNSoxsOdag8XtmZFx0" class="btn">Installer ATHUM gratuitement</a>
-        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.5;">Fichier : ATHUM.exe • Windows 10/11</p>
-    </section>
-
-    <section class="install-guide">
-        <h2>Guide d'installation & Sécurité</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <p>Après le téléchargement, lancez <span class="highlight">ATHUM.exe</span>.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <p>Dans la fenêtre Windows Defender, cliquez sur <span class="highlight">"Informations complémentaires"</span>.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <p>Cliquez sur <span class="highlight">"Exécuter quand même"</span> pour finaliser l'installation.</p>
-            </div>
-        </div>
-        <p style="margin-top: 30px; font-size: 0.85rem; opacity: 0.6;">
-            Note : Si le téléchargement ne se lance pas, essayez d'ouvrir le lien dans un nouvel onglet.
+        <p class="warning-text">
+            <strong style="color:var(--text)">Quick fix:</strong> On the SmartScreen warning, click <strong style="color:var(--text)">"More info"</strong>, then <strong style="color:var(--text)">"Run anyway"</strong>.
         </p>
-    </section>
+        <button class="warning-toggle" onclick="document.getElementById('warning-details').classList.toggle('open')">
+            See detailed steps to disable SmartScreen temporarily ↓
+        </button>
+        <div class="warning-details" id="warning-details">
+            <ol>
+                <li>Open <strong>Windows Security</strong> (search "Windows Security" in the Start menu)</li>
+                <li>Click <strong>App & browser control</strong></li>
+                <li>Click <strong>Reputation-based protection settings</strong></li>
+                <li>Turn <strong>Off</strong> the option <strong>Check apps and files</strong></li>
+                <li>Install Athum normally</li>
+                <li><strong>Re-enable it</strong> after installation by switching it back <strong>On</strong> — recommended for your security</li>
+            </ol>
+            <p style="margin-top:14px;color:var(--text-3);font-size:12px;line-height:1.6">
+                💡 Athum is safe — it's an open-source Electron app. The SmartScreen warning only happens because the developer (a 13-year-old) doesn't have a $199/year Microsoft code-signing certificate yet. This is normal for new indie apps.
+            </p>
+        </div>
+    </div>
+</section>
 
-    <section class="features">
-        <div class="card">
-            <h3>Le Social Réinventé</h3>
-            <p>Stats en direct pour chaque joueur. Suivez vos potes et comparez vos performances en temps réel.</p>
-        </div>
-        <div class="card">
-            <h3>Promos Automatiques</h3>
-            <p>Notre système scanne les plus grosses réductions pour vous. Ne ratez plus aucune promo gaming.</p>
-        </div>
-        <div class="card">
-            <h3>Bibliothèque Géante</h3>
-            <p>Une base de données de 300+ jeux avec visuels HD et accès direct. Tout votre univers est ici.</p>
-        </div>
-    </section>
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+    <div>
+        <a href="https://discord.gg/grsvrKxRj" target="_blank">Discord</a>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+    </div>
+    <div class="footer-version">Athum v4.0 Beta · Built by Leo Garcia Bourhis · © 2026</div>
+</footer>
 
-    <footer>
-        <p>Contact : <a href="mailto:lgarciabourhis@icloud.com" style="color:var(--accent); text-decoration:none;">lgarciabourhis@icloud.com</a></p>
-        <br>
-        &copy; 2026 ATHUM Project — Développé par Léo Garcia Bourhis
-    </footer>
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// Reveal animations on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.15 });
+reveals.forEach(r => observer.observe(r));
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+</script>
+
 </body>
 </html>
